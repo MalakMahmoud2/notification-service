@@ -3,7 +3,9 @@ const { sendInAppNotification } = require("../services/inApp.service");
 const { logSystemMessage } = require("../services/systemMessage.service");
 
 async function consumeTicketNotifications(channel, exchange) {
-  const q = await channel.assertQueue("", { exclusive: true });
+  const q = await channel.assertQueue("ticket.notification.queue", {
+  durable: true
+});
 
   await channel.bindQueue(q.queue, exchange, "ticket.notification.*");
 
