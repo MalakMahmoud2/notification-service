@@ -29,6 +29,10 @@ const createNotificationAPI = require("./api/notification.api");
     app.listen(PORT, () => {
       console.log(`Notification Service running on port ${PORT}`);
     });
+
+    // 👇 keep process alive for Railway
+    setInterval(() => {}, 1000);
+
   } catch (err) {
     console.error("Fatal startup error:", err);
     process.exit(1);
