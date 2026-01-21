@@ -21,8 +21,6 @@ USER nodejs
 
 EXPOSE 3000
 
-HEALTHCHECK CMD node -e "\
-require('http').get('http://localhost:' + (process.env.PORT || 3000) + '/api/notifications/health', \
-r => process.exit(r.statusCode === 200 ? 0 : 1))"
+
 
 CMD ["node", "src/index.js"]
