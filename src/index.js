@@ -29,6 +29,9 @@ const createNotificationAPI = require("./api/notification.api");
       console.log(`Notification Service running on port ${PORT}`);
     });
 
+    // REQUIRED for Railway Docker (keep service alive)
+    setInterval(() => {}, 1000);
+
   } catch (err) {
     console.error("Fatal startup error:", err);
     process.exit(1);
