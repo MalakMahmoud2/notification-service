@@ -19,19 +19,15 @@ const createNotificationAPI = require("./api/notification.api");
     app.use(express.json());
 
     const { channel, EXCHANGE_NAME } = await connectRabbitMQ();
-
     await consumeTicketNotifications(channel, EXCHANGE_NAME);
 
     app.use("/api/notifications", createNotificationAPI(channel, EXCHANGE_NAME));
 
     const PORT = process.env.PORT || 3000;
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`Notification Service running on port ${PORT}`);
     });
-
-    // 👇 keep process alive for Railway
-    setInterval(() => {}, 1000);
 
   } catch (err) {
     console.error("Fatal startup error:", err);
