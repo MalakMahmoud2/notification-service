@@ -1,4 +1,6 @@
 const express = require("express");
+const Notification = require("../models/Notification");
+
 
 function setNotificationAPI(channel, exchange) {
   const router = express.Router();
@@ -34,6 +36,23 @@ function setNotificationAPI(channel, exchange) {
       res.status(502).json({ error: "Failed to publish event" });
     }
   });
+
+
+  // Get all notifications for a user (OLD notifications)
+router.get("/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const notifications = await Notification.find({ userId })
+      .sort({ createdAt: -1 });
+
+    res.json(notifications);
+  } catch (err) {
+    console.error("Failed to fetch notifications:", err);
+    res.status(500).json({ error: "Failed to fetch notifications" });
+  }
+});
+
 
   return router;
 }

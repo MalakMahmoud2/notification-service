@@ -1,3 +1,4 @@
+const connectMongoDB = require("./config/db");
 require("dotenv").config();
 
 process.on("unhandledRejection", (err) => {
@@ -17,6 +18,9 @@ const createNotificationAPI = require("./api/notification.api");
   try {
     const app = express();
     app.use(express.json());
+
+    //  MongoDB
+    await connectMongoDB();
 
     const { channel, EXCHANGE_NAME } = await connectRabbitMQ();
     await consumeTicketNotifications(channel, EXCHANGE_NAME);

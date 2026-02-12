@@ -8,7 +8,10 @@ async function connectRabbitMQ(retries = 10, delay = 5000) {
     try {
       console.log(`Trying to connect to RabbitMQ (${i + 1}/${retries})...`);
 
-      const connection = await amqp.connect(process.env.RABBITMQ_URL, {
+
+      const RABBITMQ_URL = "amqp://opsmind:opsmind@opsmind-rabbitmq:5672";
+         console.log("RABBITMQ_URL =", RABBITMQ_URL);
+      const connection = await amqp.connect(RABBITMQ_URL, {
         heartbeat: 30,
       });
 
