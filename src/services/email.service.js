@@ -1,20 +1,20 @@
-//handel email
-const transporter = require("../config/mailer");
+const nodemailer = require("nodemailer");
 
-async function sendEmail(to, subject, text) {
-  if (!to) {
-    console.warn(`Email not sent. Recipient is missing for subject: "${subject}"`);
-    return;
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: process.env.SMTP_PORT,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
   }
+});
 
+exports.sendEmail = async (to, subject, text) => {
   await transporter.sendMail({
-    from: `"OpsMind Notifications" <${process.env.EMAIL_USER}>`,
+    from: process.env.SMTP_USER,
     to,
     subject,
     text
   });
-
-  console.log(`Email sent to ${to}`);
-}
-
-module.exports = { sendEmail };
+};
