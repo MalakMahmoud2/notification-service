@@ -11,4 +11,6 @@ router.get("/:userId/unread-count", controller.getUnreadCount);
 
 router.patch("/:id/read", controller.markAsRead);
 
+router.patch("/user/:userId/read-all", controller.markAllAsRead);
+
 module.exports = router;

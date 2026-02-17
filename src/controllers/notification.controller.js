@@ -26,6 +26,25 @@ exports.getUserNotifications = async (req, res, next) => {
   }
 };
 
+exports.markAllAsRead = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    await Notification.updateMany(
+      { userId, read: false },
+      { read: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "All notifications marked as read"
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.markAsRead = async (req, res, next) => {
   try {
     const { id } = req.params;
